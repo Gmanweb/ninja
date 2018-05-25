@@ -1,6 +1,9 @@
 # target
 target
 
+# data folder
+pipeline/data
+
 # Compiled class file
 *.class
 
