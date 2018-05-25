@@ -58,6 +58,58 @@ docker run -v "$PWD":/project -w /project maven:3.3.9-jdk-8 mvn test
 |---------|
   JENKINS
 |---------|
-
-
+pipelines
 https://jenkins.io/doc/pipeline/tour/hello-world/
+
+Add jenkinsfile to root of project
+
+## Run Junkins Docker
+docker-compose -f pipeline/docker-compose.yml up -d
+
+DOCKER_PATH=$(which docker) docker-compose -f pipeline/docker-compose.yml up -d
+> NOTE - Pipeline ERROR
+```
+[dockerdonegal] Running shell script
++ docker inspect -f . maven:3.3.3
+/var/jenkins_home/workspace/dockerdonegal@tmp/durable-049bfc82/script.sh: line 1: docker: not found
+[Pipeline] sh
+[dockerdonegal] Running shell script
++ docker pull maven:3.3.3
+/var/jenkins_home/workspace/dockerdonegal@tmp/durable-2ade8d04/script.sh: line 1: docker: not found
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] }
+[Pipeline] // node
+[Pipeline] End of Pipeline
+ERROR: script returned exit code 127
+Finished: FAILURE
+``` 
+
+### First time running jenkins
+https://jenkins.io/doc/tutorials/build-a-java-app-with-maven/
+open browser at http://localhost:8090 , follow the on screen message "To ensure Jenkins is securely set up by the administrator, a password has been written to the log (not sure where to find it?) and this file on the server:"
+run `docker logs jenkins` to get the password.
+```
+bac4b25f3e7d46fe81fd79e8efe8baea
+```
+press continue.
+just install the suggested plugins, unless you know what plugins you only need.
+should take a few minutes.
+NEXT, create first admin user
+```
+username: docker
+password: docker100%
+Full name: docker
+E-mail address: dockerdonegal@gmail.com
+```
+Save and finish button, start using Jenkins button.
+well, done! Welcome to Jenkins!
+
+## Create pipline
+
+
+|----------------|
+  DOCKER COMMANDS
+|----------------|
+Clean Up
+docker rm $(docker ps -a -f status=exited -q)
