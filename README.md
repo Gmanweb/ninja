@@ -18,13 +18,13 @@ java -jar target/actuator-sample-0.0.1-SNAPSHOT.jar
 ```
 ## Test the service
 Now that the service is up, visit http://localhost:8080/greeting, where you see:
-http://localhost:8080/greeting
+http://localhost:9080/greeting
 ```
 {"id":1,"content":"Hello, World!"}
 ```
 
 Provide a name query string parameter with http://localhost:8080/greeting?name=User. Notice how the value of the content attribute changes from "Hello, World!" to "Hello User!":
-http://localhost:8080/greeting?name=User
+http://localhost:9080/greeting?name=docker donegal
 ```
 {"id":2,"content":"Hello, User!"}
 ```
@@ -44,7 +44,7 @@ docker push dockerdonegal/helloworld:v1
 
 ## pull our image and run it.
 ```
-docker run -it -p 8080:8080 --name actuator dockerdonegal/helloworld:v1
+docker run -it -p 8080:8080 --name actuator dockerdonegal/helloworld:v2
 ```
 
 |---------|
@@ -111,5 +111,15 @@ well, done! Welcome to Jenkins!
 |----------------|
   DOCKER COMMANDS
 |----------------|
-Clean Up
+```
+# Clean Up
 docker rm $(docker ps -a -f status=exited -q)
+
+# build pipeline
+docker-compose -f pipeline/docker-compose.yml build
+
+# run pipeline, (jenkins)
+docker-compose -f pipeline/docker-compose.yml up -d
+
+
+```
